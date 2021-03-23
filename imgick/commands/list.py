@@ -23,6 +23,7 @@ def list(argv):
         print('%d:' % index)
         print('\tname: %s' % name)
         print('\tsize: %dx%d' % layer.img.size)
+        print('\tvisible: %s' % str(layer.visible))
         print('\ttop: %d' % layer.loc[0])
         print('\tleft: %d' % layer.loc[1])
 

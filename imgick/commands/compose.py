@@ -14,6 +14,8 @@ def compose(argv):
     parser.add_argument('-l', '--left', type=int, default=0, help='Background layer left offset, 0 if omitted')
     parser.add_argument('-W', '--width', type=int, default=0, help='Background layer width, same as project if omitted')
     parser.add_argument('-H', '--height', type=int, default=0, help='Background layer height, same as project if omitted')
+    parser.add_argument('-x', '--hidden', dest='visible', action='store_false', help='If set the layer will not appear visible')
+    parser.set_defaults(visible=True)
     args = parser.parse_args(argv)
 
     project = Project.load(args.project)
@@ -27,12 +29,12 @@ def compose(argv):
         image = Image.open(args.layer)
         if not size.count(0):  # a resize has been specified
             image = image.resize(size)
-        layer = Layer(image, location)
+        layer = Layer(image, location, args.visible)
 
     except FileNotFoundError:  # solid color bg
         if size.count(0):  # set to project size if no size specified
             bg_size = project.size
-        layer = Layer(Image.new('RGBA', size, hex2rgba(args.layer)), location)
+        layer = Layer(Image.new('RGBA', size, hex2rgba(args.layer)), location, args.visible)
 
     # Add layer to project
     project.add_layer(args.name, layer, args.index)

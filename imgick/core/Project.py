@@ -25,7 +25,7 @@ class Project(object):
                 location = (int(child.get('top')), int(child.get('left')))
                 image_file = BytesIO(zf.read(child.get('path')))
                 image = Image.open(image_file, formats=['BMP'])
-                layers.append((child.get('name'), Layer(image, location)))
+                layers.append((child.get('name'), Layer(image, location, child.get('visible').lower() == 'true')))
 
             return cls(size, layers)
 
@@ -51,7 +51,8 @@ class Project(object):
     def _render_layer(self, layers: List[Layer], size: (int, int)) -> Image:
         if layers:
             base = self._render_layer(layers[1:], size)
-            base.paste(layers[0].img, layers[0].loc)
+            if layers[0].visible:
+                base.paste(layers[0].img, layers[0].loc)
             return base
         else:
             return Image.new('RGBA', size, (0, 0, 0, 0))
