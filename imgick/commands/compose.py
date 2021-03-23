@@ -5,7 +5,7 @@ from imgick.core.Project import *
 
 def compose(argv):
     parser = argparse.ArgumentParser(description='Compose a new layer onto an imgick project')
-    parser.add_argument('project', help='Imgick project to render')
+    parser.add_argument('project', help='Imgick project to compose onto')
     parser.add_argument('layer', help='Background layer to compose, specify an RGBA color in hex or image file')
     parser.add_argument('-o', '--output', help='Output file name. If omitted will overwrite the existing project')
     parser.add_argument('-n', '--name', default="New Layer", help='Layer name')

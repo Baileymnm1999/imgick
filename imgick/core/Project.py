@@ -71,3 +71,6 @@ class Project(object):
 
     def add_layer(self, name, layer, index=0):
         self._layers.insert(index, (name, layer))
+
+    def remove_layer(self, index):
+        self._layers.pop(index)
