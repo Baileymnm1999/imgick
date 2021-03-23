@@ -6,14 +6,14 @@ from imgick.core.Project import *
 def compose(argv):
     parser = argparse.ArgumentParser(description='Compose a new layer onto an imgick project')
     parser.add_argument('project', help='Imgick project to compose onto')
-    parser.add_argument('layer', help='Background layer to compose, specify an RGBA color in hex or image file')
+    parser.add_argument('layer', help='Layer to compose, specify an RGBA color in hex or image file')
     parser.add_argument('-o', '--output', help='Output file name. If omitted will overwrite the existing project')
     parser.add_argument('-n', '--name', default="New Layer", help='Layer name')
     parser.add_argument('-i', '--index', type=int, default=0, help='Index to insert the layer, 0 if omitted')
-    parser.add_argument('-t', '--top', type=int, default=0, help='Background layer top offset, 0 if omitted')
-    parser.add_argument('-l', '--left', type=int, default=0, help='Background layer left offset, 0 if omitted')
-    parser.add_argument('-W', '--width', type=int, default=0, help='Background layer width, same as project if omitted')
-    parser.add_argument('-H', '--height', type=int, default=0, help='Background layer height, same as project if omitted')
+    parser.add_argument('-t', '--top', type=int, default=0, help='Layer top offset, 0 if omitted')
+    parser.add_argument('-l', '--left', type=int, default=0, help='Layer left offset, 0 if omitted')
+    parser.add_argument('-W', '--width', type=int, default=0, help='Layer width, same as project if omitted')
+    parser.add_argument('-H', '--height', type=int, default=0, help='Layer height, same as project if omitted')
     parser.add_argument('-x', '--hidden', dest='visible', action='store_false', help='If set the layer will not appear visible')
     parser.set_defaults(visible=True)
     args = parser.parse_args(argv)
@@ -33,7 +33,7 @@ def compose(argv):
 
     except FileNotFoundError:  # solid color bg
         if size.count(0):  # set to project size if no size specified
-            bg_size = project.size
+            size = project.size
         layer = Layer(Image.new('RGBA', size, hex2rgba(args.layer)), location, args.visible)
 
     # Add layer to project
